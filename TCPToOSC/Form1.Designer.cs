@@ -84,6 +84,13 @@
             this.rotationchk = new System.Windows.Forms.CheckBox();
             this.label25 = new System.Windows.Forms.Label();
             this.RotationPitch = new System.Windows.Forms.Label();
+            this.OSCIP = new System.Windows.Forms.TextBox();
+            this.label26 = new System.Windows.Forms.Label();
+            this.IPLabel = new System.Windows.Forms.Label();
+            this.OSCIPPort = new System.Windows.Forms.NumericUpDown();
+            this.label27 = new System.Windows.Forms.Label();
+            this.LatencyLabel = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.OSCIPPort)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -596,11 +603,76 @@
             this.RotationPitch.TabIndex = 55;
             this.RotationPitch.Text = "0";
             // 
+            // OSCIP
+            // 
+            this.OSCIP.Location = new System.Drawing.Point(125, 200);
+            this.OSCIP.Name = "OSCIP";
+            this.OSCIP.Size = new System.Drawing.Size(100, 20);
+            this.OSCIP.TabIndex = 57;
+            this.OSCIP.Text = "192.168.137.1";
+            // 
+            // label26
+            // 
+            this.label26.AutoSize = true;
+            this.label26.Location = new System.Drawing.Point(25, 203);
+            this.label26.Name = "label26";
+            this.label26.Size = new System.Drawing.Size(76, 13);
+            this.label26.TabIndex = 58;
+            this.label26.Text = "OSC Server IP";
+            // 
+            // IPLabel
+            // 
+            this.IPLabel.AutoSize = true;
+            this.IPLabel.Location = new System.Drawing.Point(146, 9);
+            this.IPLabel.Name = "IPLabel";
+            this.IPLabel.Size = new System.Drawing.Size(0, 13);
+            this.IPLabel.TabIndex = 59;
+            // 
+            // OSCIPPort
+            // 
+            this.OSCIPPort.Location = new System.Drawing.Point(231, 200);
+            this.OSCIPPort.Maximum = new decimal(new int[] {
+            60000,
+            0,
+            0,
+            0});
+            this.OSCIPPort.Name = "OSCIPPort";
+            this.OSCIPPort.Size = new System.Drawing.Size(120, 20);
+            this.OSCIPPort.TabIndex = 61;
+            this.OSCIPPort.Value = new decimal(new int[] {
+            8000,
+            0,
+            0,
+            0});
+            // 
+            // label27
+            // 
+            this.label27.AutoSize = true;
+            this.label27.Location = new System.Drawing.Point(136, 57);
+            this.label27.Name = "label27";
+            this.label27.Size = new System.Drawing.Size(45, 13);
+            this.label27.TabIndex = 62;
+            this.label27.Text = "Latency";
+            // 
+            // LatencyLabel
+            // 
+            this.LatencyLabel.AutoSize = true;
+            this.LatencyLabel.Location = new System.Drawing.Point(201, 57);
+            this.LatencyLabel.Name = "LatencyLabel";
+            this.LatencyLabel.Size = new System.Drawing.Size(0, 13);
+            this.LatencyLabel.TabIndex = 63;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 451);
+            this.Controls.Add(this.LatencyLabel);
+            this.Controls.Add(this.label27);
+            this.Controls.Add(this.OSCIPPort);
+            this.Controls.Add(this.IPLabel);
+            this.Controls.Add(this.label26);
+            this.Controls.Add(this.OSCIP);
             this.Controls.Add(this.label25);
             this.Controls.Add(this.RotationPitch);
             this.Controls.Add(this.rotationchk);
@@ -659,6 +731,7 @@
             this.Controls.Add(this.button1);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.OSCIPPort)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -722,6 +795,12 @@
         private System.Windows.Forms.CheckBox rotationchk;
         private System.Windows.Forms.Label label25;
         private System.Windows.Forms.Label RotationPitch;
+        private System.Windows.Forms.TextBox OSCIP;
+        private System.Windows.Forms.Label label26;
+        private System.Windows.Forms.Label IPLabel;
+        private System.Windows.Forms.NumericUpDown OSCIPPort;
+        private System.Windows.Forms.Label label27;
+        private System.Windows.Forms.Label LatencyLabel;
     }
 }
 

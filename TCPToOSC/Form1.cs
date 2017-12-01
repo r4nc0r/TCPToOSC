@@ -1,22 +1,34 @@
 ﻿using System;
 using System.Drawing;
+using System.Net;
+using System.Net.Sockets;
 using System.Windows.Forms;
 
 namespace TCPToOSC
 {
     public partial class Form1 : Form
     {
+
         private SensorServer<SensorEmitterReading> Server;
         private bool oscEnabled = false;
+        private DateTime lastSignal;
 
         public Form1()
         {
             InitializeComponent();
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    IPLabel.Text += ip.ToString()+@":3547";
+                }
+            }
+            lastSignal = DateTime.Now;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-
             Server = new SensorServer<SensorEmitterReading>();
             Server.ExceptionOccured += (s, ex) =>
             {
@@ -24,17 +36,52 @@ namespace TCPToOSC
                 /* Handle a possible exception */
             };
             Server.ValuesReceived += (s, ex) =>
-            {
-                
-                ShowTCPData(ex.SensorReading);
-                SendOSCData(ex.SensorReading);
-           
-                /* New sensor data received! Do cool stuff here */
-            };
-            Server.Start();
-            ServerStateLabel.Text = @"Online";
-            ServerStateLabel.BackColor = Color.Green;
+                {
+                    ex.SensorReading = RoundData(ex.SensorReading);
+                    ShowTCPData(ex.SensorReading);
+                    SendOscData(ex.SensorReading);
+                    LatencyLabel.Text = (DateTime.Now - lastSignal).Milliseconds.ToString();
+                    lastSignal = DateTime.Now;
+                    /* New sensor data received! Do cool stuff here */
+                };
+                Server.Start();
+                ServerStateLabel.Text = @"Online";
+                ServerStateLabel.BackColor = Color.Green;
+            
+        
+            
 
+
+        }
+
+        private SensorEmitterReading RoundData(SensorEmitterReading values)
+        {
+            values.LinearAccelerationX = Math.Round(values.LinearAccelerationX, 3);
+            values.LinearAccelerationY = Math.Round(values.LinearAccelerationY, 3);
+            values.LinearAccelerationZ = Math.Round(values.LinearAccelerationZ, 3);
+
+            values.MagnetometerX = Math.Round(values.MagnetometerX, 3);
+            values.MagnetometerY = Math.Round(values.MagnetometerY, 3);
+            values.MagnetometerZ = Math.Round(values.MagnetometerZ, 3);
+            values.MagneticHeading = Math.Round(values.MagneticHeading, 3);
+
+            values.GravityX= Math.Round(values.GravityX, 3);
+            values.GravityY= Math.Round(values.GravityY, 3);
+            values.GravityZ= Math.Round(values.GravityZ, 3);
+
+            values.QuaternionX= Math.Round(values.QuaternionX, 3);
+            values.QuaternionY= Math.Round(values.QuaternionY, 3);
+            values.QuaternionZ= Math.Round(values.QuaternionZ, 3);
+            values.QuaternionW= Math.Round(values.QuaternionW, 3);
+
+            values.RotationRateX= Math.Round(values.RotationRateX, 3);
+            values.RotationRateY= Math.Round(values.RotationRateY, 3);
+            values.RotationRateZ= Math.Round(values.RotationRateZ, 3);
+            values.RotationPitch= Math.Round(values.RotationPitch, 3);
+            values.RotationRoll= Math.Round(values.RotationRoll, 3);
+            values.RotationYaw= Math.Round(values.RotationYaw, 3);
+           
+            return values;
         }
 
         private void ShowTCPData(SensorEmitterReading values)
@@ -67,11 +114,11 @@ namespace TCPToOSC
             RotationYaw.Text = values.RotationYaw.ToString();
         }
 
-        private void SendOSCData(SensorEmitterReading values)
+        private void SendOscData(SensorEmitterReading values)
         {
             if (oscEnabled)
             {
-                var sender = new SharpOSC.UDPSender("127.0.0.1", 9000);
+                var sender = new SharpOSC.UDPSender(OSCIP.Text, decimal.ToInt32(OSCIPPort.Value));
                 if (magnetchk.Checked)
                 {
                     if (values.MagnetometerDataValid)
@@ -105,9 +152,18 @@ namespace TCPToOSC
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //Server.Dispose();
-            ServerStateLabel.Text = @"Offline";
-            ServerStateLabel.BackColor = Color.Red;
+            try
+            {
+                Server.Dispose();
+                ServerStateLabel.Text = @"Offline";
+                ServerStateLabel.BackColor = Color.Red;
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception);
+                throw;
+            }
+        
         }
 
         private void oscStartbtn_Click(object sender, EventArgs e)
