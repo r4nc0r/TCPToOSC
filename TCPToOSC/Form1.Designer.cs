@@ -90,6 +90,10 @@
             this.OSCIPPort = new System.Windows.Forms.NumericUpDown();
             this.label27 = new System.Windows.Forms.Label();
             this.LatencyLabel = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.HeigthLabel = new System.Windows.Forms.Label();
+            this.Calibrate = new System.Windows.Forms.Button();
+            this.DebugLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.OSCIPPort)).BeginInit();
             this.SuspendLayout();
             // 
@@ -662,11 +666,51 @@
             this.LatencyLabel.Size = new System.Drawing.Size(0, 13);
             this.LatencyLabel.TabIndex = 63;
             // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.Location = new System.Drawing.Point(28, 260);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(38, 13);
+            this.label28.TabIndex = 64;
+            this.label28.Text = "Heigth";
+            // 
+            // HeigthLabel
+            // 
+            this.HeigthLabel.AutoSize = true;
+            this.HeigthLabel.Location = new System.Drawing.Point(88, 260);
+            this.HeigthLabel.Name = "HeigthLabel";
+            this.HeigthLabel.Size = new System.Drawing.Size(0, 13);
+            this.HeigthLabel.TabIndex = 65;
+            // 
+            // Calibrate
+            // 
+            this.Calibrate.Location = new System.Drawing.Point(28, 288);
+            this.Calibrate.Name = "Calibrate";
+            this.Calibrate.Size = new System.Drawing.Size(75, 23);
+            this.Calibrate.TabIndex = 66;
+            this.Calibrate.Text = "Calibrate";
+            this.Calibrate.UseVisualStyleBackColor = true;
+            this.Calibrate.Click += new System.EventHandler(this.Calibrate_Click);
+            // 
+            // DebugLabel
+            // 
+            this.DebugLabel.AutoSize = true;
+            this.DebugLabel.Location = new System.Drawing.Point(28, 370);
+            this.DebugLabel.Name = "DebugLabel";
+            this.DebugLabel.Size = new System.Drawing.Size(65, 13);
+            this.DebugLabel.TabIndex = 67;
+            this.DebugLabel.Text = "DebugLabel";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 451);
+            this.Controls.Add(this.DebugLabel);
+            this.Controls.Add(this.Calibrate);
+            this.Controls.Add(this.HeigthLabel);
+            this.Controls.Add(this.label28);
             this.Controls.Add(this.LatencyLabel);
             this.Controls.Add(this.label27);
             this.Controls.Add(this.OSCIPPort);
@@ -801,6 +845,10 @@
         private System.Windows.Forms.NumericUpDown OSCIPPort;
         private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label LatencyLabel;
+        private System.Windows.Forms.Label label28;
+        private System.Windows.Forms.Label HeigthLabel;
+        private System.Windows.Forms.Button Calibrate;
+        private System.Windows.Forms.Label DebugLabel;
     }
 }
 

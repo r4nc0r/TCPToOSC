@@ -12,6 +12,8 @@ namespace TCPToOSC
         private SensorServer<SensorEmitterReading> Server;
         private bool oscEnabled = false;
         private DateTime lastSignal;
+        private double height;
+        private int counter;
 
         public Form1()
         {
@@ -25,6 +27,8 @@ namespace TCPToOSC
                 }
             }
             lastSignal = DateTime.Now;
+            height = 0;
+            counter = 0;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -38,6 +42,11 @@ namespace TCPToOSC
             Server.ValuesReceived += (s, ex) =>
                 {
                     ex.SensorReading = RoundData(ex.SensorReading);
+                    if (counter % 10 ==0)
+                    {
+                         CalculateHeight(ex.SensorReading.LinearAccelerationZ);
+                    }
+                    DebugLabel.Text=counter.ToString();
                     ShowTCPData(ex.SensorReading);
                     SendOscData(ex.SensorReading);
                     LatencyLabel.Text = (DateTime.Now - lastSignal).Milliseconds.ToString();
@@ -51,6 +60,13 @@ namespace TCPToOSC
         
             
 
+
+        }
+
+        private void CalculateHeight(double accleration)
+        {
+            height += accleration * 9.81 / 1000000 *Math.Pow((DateTime.Now-lastSignal).Milliseconds,2);
+            HeigthLabel.Text=height.ToString();
 
         }
 
@@ -178,6 +194,11 @@ namespace TCPToOSC
             oscEnabled = false;
             OSCStatus.Text = @"Offline";
             OSCStatus.BackColor = Color.Red;
+        }
+
+        private void Calibrate_Click(object sender, EventArgs e)
+        {
+            height = 0;
         }
     }
 }
